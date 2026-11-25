@@ -1,5 +1,5 @@
 ---
-name: figma-opencode-mcp
+name: figma-use-oc
 description: "Use whenever operating the Figma MCP server: creating, editing, cloning, syncing, or inspecting designs, wireframes, screens, or components in Figma, or when a figma.com URL appears. Field-tested call mechanics for tools.figma.* inside execute, plus sandbox gotchas (parent-relative coords, revert-on-throw, variable binding) that the official plugin docs don't state. Load before the first figma tool call."
 ---
 

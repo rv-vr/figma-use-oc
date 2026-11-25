@@ -1,9 +1,11 @@
-# figma-opencode-mcp
+# figma-use-oc
 
 An [OpenCode](https://opencode.ai) skill that makes AI models reliably able to
-drive the [Figma MCP server](https://mcp.figma.com) — placing frames, cloning
-screens, binding variables, converting to auto-layout — without the fumbling
-that fresh sessions usually show.
+drive the Figma MCP server — placing frames, cloning screens, binding
+variables, converting to auto-layout — without the fumbling that fresh
+sessions usually show.
+
+The name follows Figma's own `figma-use` skill naming; `oc` = OpenCode.
 
 **Why this exists:** most models fumble the Figma MCP in a new session. The
 figma tools are only reachable inside Code Mode (`execute`), and the plugin
@@ -12,36 +14,37 @@ coordinates that produce phantom readings, whole-batch reverts on an uncaught
 throw, variables that fail silently when looked up by bare name. This skill
 injects a field-tested playbook on demand.
 
-## Install
+## Prerequisites
 
-### 1. Connect the Figma MCP server
+This skill drives the official Figma MCP server — it does not set it up.
+You need OpenCode with a working `figma` server connection first:
 
 ```sh
 opencode mcp add figma --global --url https://mcp.figma.com/mcp
 ```
 
-Then sign in: `/mcps` → figma → sign in (or `opencode mcp auth figma`).
+Heads-up on auth: Figma's OAuth client allowlist does not include OpenCode
+yet ([sst/opencode#5636](https://github.com/sst/opencode/issues/5636),
+[#5583](https://github.com/sst/opencode/issues/5583)), so the standard
+`/mcps` sign-in flow may fail today. The community
+[mcp-auth-helper](https://github.com/sdaoudi/mcp-auth-helper) works around the
+allowlist but writes to the legacy `mcp-auth.json` storage that current
+OpenCode no longer reads (V2 keeps MCP credentials in its own database).
+Authentication is outside this repo's scope — however you get `figma`
+connected, the skill takes over from there.
 
-> **Sign-in fails?** Figma's OAuth client allowlist doesn't include OpenCode
-> yet ([sst/opencode#5636](https://github.com/sst/opencode/issues/5636),
-> [#5583](https://github.com/sst/opencode/issues/5583)). The community
-> [mcp-auth-helper](https://github.com/sdaoudi/mcp-auth-helper) works around
-> that, but it writes tokens to the legacy `mcp-auth.json` file, which current
-> OpenCode no longer reads — V2 keeps MCP credentials in its SQLite database
-> instead. Until Figma allowlists OpenCode, browser sign-in may fail.
-
-### 2. Add the skill
+## Install the skill
 
 Global (every project):
 
 ```sh
-git clone https://github.com/rv-vr/figma-opencode-mcp ~/.config/opencode/skills/figma-opencode-mcp
+git clone https://github.com/rv-vr/figma-use-oc ~/.config/opencode/skills/figma-use-oc
 ```
 
 Or project-only:
 
 ```sh
-git clone https://github.com/rv-vr/figma-opencode-mcp .opencode/skills/figma-opencode-mcp
+git clone https://github.com/rv-vr/figma-use-oc .opencode/skills/figma-use-oc
 ```
 
 That's it. A directory containing `SKILL.md` is one skill; the folder name is
